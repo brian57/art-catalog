@@ -1,8 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./css/index.css";
-import "./css/spinner.css";
-import "./bootstrap.min.css";
+import "./css/bootstrap.materia.min.css";
 import App from "./App";
 import { Provider } from "react-redux";
 import registerServiceWorker from "./registerServiceWorker";

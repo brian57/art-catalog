@@ -1,3 +1,11 @@
+function initialState() {
+    const currentDate = new Date();
+    return {
+        month: currentDate.getMonth() + 1,
+        day: currentDate.getDate(),
+        year: currentDate.getFullYear()
+    };
+}
 
 export default function reducer(
     state = {
@@ -5,16 +13,22 @@ export default function reducer(
         fetched: false,
         artworks: [],
         error: null,
+        cardWidth: 200,
         artForm: {
-          value: '',
-          uploadedFileCloudinaryUrl: '',
-          isUploadingImage: false,
-          uploadedFile: null
+            value: "",
+            uploadedFileCloudinaryUrl: "",
+            isUploadingImage: false,
+            dateCreated: initialState(),
+            uploadedFile: null
         }
     },
     action
 ) {
     switch (action.type) {
+        case "EDIT_CARD_WIDTH": {
+            console.log("REDUCING card width to " + action.value);
+            return { ...state, cardWidth: action.value };
+        }
         case "FETCH_ARTWORKS": {
             return { ...state, isFetching: true };
         }
@@ -26,7 +40,7 @@ export default function reducer(
                 ...state,
                 isFetching: false,
                 artworks: artworksReducer(action, action.artworks)
-            }
+            };
         }
         case "ADD_ARTWORK_RECIEVED": {
             const newState = {
@@ -60,7 +74,11 @@ export default function reducer(
                 ...state,
                 artForm: {
                     ...state.artForm,
-                    ...action.data
+                    ...action.data,
+                    dateCreated: {
+                        ...state.artForm.dateCreated,
+                        ...action.data.dateCreated
+                    }
                 }
             };
         }
@@ -68,24 +86,24 @@ export default function reducer(
             action.data = {
                 title: state.artForm.value,
                 imgUrl: state.artForm.uploadedFileCloudinaryUrl,
-                refId: action.refId,
-            }
+                refId: action.refId
+            };
 
             return {
                 ...state,
                 artworks: artworksReducer(action, state.artworks)
-            }
+            };
         }
         case "CLEAR_FORM": {
             return {
                 ...state,
                 artForm: {
-                  value: '',
-                  uploadedFileCloudinaryUrl: '',
-                  isUploadingImage: false,
-                  uploadedFile: null
+                    value: "",
+                    uploadedFileCloudinaryUrl: "",
+                    isUploadingImage: false,
+                    uploadedFile: null
                 }
-            }
+            };
         }
         default: {
             return state;
@@ -95,18 +113,16 @@ export default function reducer(
 
 // reducer for the artworks array prop
 function artworksReducer(action, artworks) {
-
     switch (action.type) {
         case "RECIEVED_ARTWORKS": {
             return action.artworks.map(artwork => {
-                    artwork.isUpdating = false;
-                    return artwork;
+                artwork.isUpdating = false;
+                return artwork;
             });
         }
         case "ADD_ARTWORK_RECIEVED": {
             return artworks.map(artwork => {
                 if (artwork.refId === action.data.refId) {
-
                     return {
                         ...artwork,
                         id: action.data.id,
@@ -130,12 +146,12 @@ function artworksReducer(action, artworks) {
                     refId: action.data.refId,
                     isUpdating: true
                 }
-            ]
+            ];
         }
 
         // remove pending
         case "REMOVE_PENDING_ARTWORK": {
-            return artworks.filter((artwork) => artwork.isUpdating === false)
+            return artworks.filter(artwork => artwork.isUpdating === false);
         }
         case "REMOVE_ARTWORK": {
             return artworks.filter(artwork => {
@@ -152,6 +168,5 @@ function artworksReducer(action, artworks) {
         default: {
             return artworks;
         }
-
     }
 }

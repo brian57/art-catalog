@@ -1,8 +1,9 @@
 import React from "react";
 import ArtForm from "./ArtForm";
 import ArtCard from "./ArtCard";
+import Slider from "./Slider";
 import {connect} from 'react-redux';
-import { fetchArtwork, removeArtwork } from "../actions/artworks";
+import { fetchArtwork, removeArtwork, editCardWidth } from "../actions/artworks";
 
 class Layout extends React.Component {
 
@@ -15,11 +16,19 @@ class Layout extends React.Component {
   }
 
   render() {
+    const footerStyle = {
+      clear: "both",
+      // width: 100,
+      // height: 100,
+      // border: "1px solid blue"
+    };
+
     return (
       <div className="layout">
         <h1>Artworks</h1>
         {/* <ArtForm handleClick={this.handleClick.bind(this)} /> */}
         <ArtForm />
+        <Slider editCardWidth={this.props.editCardWidth} widthVal={this.props.cardWidth}/>
         <div className="artwork-container">
           {this.props.artwork.map(artwork => (
             <ArtCard
@@ -28,8 +37,10 @@ class Layout extends React.Component {
               onDelete={this.onDelete.bind(this)}
               title={artwork.title}
               imgUrl={artwork.imgUrl}
+              cardWidth={this.props.cardWidth}
             />
           ))}
+          <div style={footerStyle} ></div>
         </div>
       </div>
     );
@@ -38,14 +49,16 @@ class Layout extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    artwork: state.artworks
+    artwork: state.artworks,
+    cardWidth: state.cardWidth
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     removeArtwork: (id) => dispatch(removeArtwork(id)),
-    fetchArtwork: () => dispatch(fetchArtwork())
+    fetchArtwork: () => dispatch(fetchArtwork()),
+    editCardWidth: (width) => dispatch(editCardWidth(width))
   }
 }
 

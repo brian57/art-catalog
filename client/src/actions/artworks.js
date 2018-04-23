@@ -51,3 +51,10 @@ export function updateArtwork(artwork) {
         data: artwork,
     }
 }
+
+export function editCardWidth(width) {
+    return {
+        type: "EDIT_CARD_WIDTH",
+        value: width
+    }
+}

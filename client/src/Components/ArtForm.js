@@ -5,6 +5,7 @@ import request from "superagent";
 import Spinner from "./Spinner";
 import { connect } from 'react-redux';
 import { updateForm, submitForm } from '../actions/form';
+import DatePicker from './DatePicker';
 
 const CLOUDINARY_UPLOAD_PRESET = "kzppjij9";
 const CLOUDINARY_UPLOAD_URL =
@@ -16,6 +17,11 @@ class ArtForm extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+  }
+
+  handleDateChange(event) {
+    this.props.updateForm({dateCreated: { [event.target.name]: event.target.value }});
   }
 
   handleChange(event) {
@@ -57,7 +63,7 @@ class ArtForm extends React.Component {
     let dropzoneStyle = {
       width: 302,
       height: 300,
-      border: "1px dashed #fff",
+      border: "1px dashed #555",
       borderRadius: "10px",
       overflow: "hidden",
       position: "relative"
@@ -112,14 +118,25 @@ class ArtForm extends React.Component {
               </Dropzone>
             </div>
             <div className="col-sm">
-              <label>
-                Title:
-                <input
-                  type="text"
+              <div className="form-group">
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  placeholder="Title" 
                   value={this.props.formData.value}
                   onChange={this.handleChange}
-                />
-              </label>
+                  />
+                  </div>
+              <div className="form-group">
+                  <select className="custom-select">
+                    <option defaultValue="">Category</option>
+                    <option value="portrait">Portrait</option>
+                    <option value="still life">Still Life</option>
+                    <option value="abstract">Abstract</option>
+                    <option value="drawing">Drawing</option>
+                  </select>
+              </div>
+              <DatePicker dateVal={this.props.formData.dateCreated} handleChange={this.handleDateChange}/>
               <Button bsStyle="primary" type="submit">
                 Submit
               </Button>

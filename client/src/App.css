@@ -28,19 +28,9 @@
 }
 
 .artwork-container {
-  border: 1px solid #aaa;
+  /*border: 1px solid #aaa;*/
   margin: 5px;
-/*
+  overflow: visible;
   clear: both;
   display: block;
-*/
-  overflow: hidden;
-}
-
-.artwork-box {
-  border: 1px solid #aaa;
-  margin: 5px;
-  width: 100px;
-  height: 200px;
-  float: left;
 }

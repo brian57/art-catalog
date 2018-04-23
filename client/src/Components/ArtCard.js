@@ -7,13 +7,37 @@ class ArtCard extends React.Component {
   }
 
   render() {
+    console.log("this.props.cardWidth = "+ this.props.cardWidth);
+
+    const containerStyle = {
+      width: this.props.cardWidth + "px",
+      height: this.props.cardWidth + "px",
+      cursor: "pointer",
+      position: "relative",
+    }
+
+    const boxStyle = {
+      backgroundImage: `url(${this.props.imgUrl})`,
+      backgroundPosition: "center center",
+      backgroundOrigin: "border-box",
+      backgroundSize: "contain",
+      backgroundRepeat: "no-repeat",
+    }
+
     return (
-      <div className="artwork-box">
-        {this.props.title}
-        <img src={this.props.imgUrl} width={"100"} alt=""/>
-        <Button bsStyle="danger" onClick={this.onDelete.bind(this)}>
-          Delete
-        </Button>
+      <div className="artwork-card" style={containerStyle}>
+        <div className="inner-card" style={boxStyle} >
+          <div className="overlay">
+            <div className="title-container">
+              {this.props.title}
+            </div>
+            <div className="button-container">
+              <Button bsStyle="danger" className="deleteButton" onClick={this.onDelete.bind(this)}>
+                Delete
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
