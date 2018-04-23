@@ -7,7 +7,6 @@ class ArtCard extends React.Component {
   }
 
   render() {
-    console.log("this.props.cardWidth = "+ this.props.cardWidth);
 
     const containerStyle = {
       width: this.props.cardWidth + "px",

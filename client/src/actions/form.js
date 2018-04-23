@@ -11,14 +11,17 @@ export function updateForm(data) {
 export function submitForm(formData) {
   return dispatch => {
     const refId = uuidv1();
+
     // add a new artwork but set to pending
     dispatch({
       type: "ADD_PENDING_ARTWORK",
-      refId: refId
+      refId: refId,
+      title: formData.title,
+      imgUrl: formData.uploadedFileCloudinaryUrl,
     });
 
     const artwork = {
-      title: formData.value,
+      title: formData.title,
       imgUrl: formData.uploadedFileCloudinaryUrl,
     };
 

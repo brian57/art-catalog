@@ -49,8 +49,8 @@ class Layout extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    artwork: state.artworks,
-    cardWidth: state.cardWidth
+    artwork: state.artworks.artworks,
+    cardWidth: state.artworks.cardWidth
   }
 }
 

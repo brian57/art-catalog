@@ -6,7 +6,6 @@ export function fetchArtwork() {
 
         axios.get("/api/work")
           .then((res) => {
-            console.log(res);
             dispatch({
                 type: "RECIEVED_ARTWORKS",
                 artworks: res.data

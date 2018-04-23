@@ -25,7 +25,7 @@ class ArtForm extends React.Component {
   }
 
   handleChange(event) {
-    this.props.updateForm({value: event.target.value});
+    this.props.updateForm({title: event.target.value});
   }
 
   handleSubmit(event) {
@@ -123,7 +123,7 @@ class ArtForm extends React.Component {
                   type="text" 
                   className="form-control" 
                   placeholder="Title" 
-                  value={this.props.formData.value}
+                  value={this.props.formData.title}
                   onChange={this.handleChange}
                   />
                   </div>
@@ -151,7 +151,7 @@ class ArtForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    formData: state.artForm
+    formData: state.form
   }
 }
 
