@@ -3,8 +3,7 @@ import Button from "react-bootstrap/lib/Button";
 import Dropzone from "react-dropzone";
 import request from "superagent";
 import Spinner from "./Spinner";
-import { connect } from 'react-redux';
-import { updateForm, submitForm } from '../actions/form';
+// import { connect } from 'react-redux';
 import DatePicker from './DatePicker';
 
 const CLOUDINARY_UPLOAD_PRESET = "kzppjij9";
@@ -18,13 +17,21 @@ class ArtForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleCategoryChange = this.handleCategoryChange.bind(this);
   }
 
   handleDateChange(event) {
+    event.preventDefault();
     this.props.updateForm({dateCreated: { [event.target.name]: event.target.value }});
   }
 
+  handleCategoryChange(event) {
+    event.preventDefault();
+    this.props.updateForm({category: event.target.value });
+  }
+
   handleChange(event) {
+    event.preventDefault();
     this.props.updateForm({title: event.target.value});
   }
 
@@ -66,7 +73,11 @@ class ArtForm extends React.Component {
       border: "1px dashed #555",
       borderRadius: "10px",
       overflow: "hidden",
-      position: "relative"
+      position: "relative",
+      backgroundPosition: "center center",
+      backgroundOrigin: "border-box",
+      backgroundSize: "contain",
+      backgroundRepeat: "no-repeat",
     };
 
     if (this.props.formData.isUploadingImage) {
@@ -77,6 +88,7 @@ class ArtForm extends React.Component {
       backgroundColor: "rgba(255, 255, 255, 0.5)"
     };
 
+
     var dropzoneInnerHTML;
     // Show image in background if one has already been uploaded.
     if (this.props.formData.uploadedFileCloudinaryUrl === "") {
@@ -86,17 +98,23 @@ class ArtForm extends React.Component {
         <p>Drop an image or click to select a file to upload.</p>
       );
     } else {
+      let boxStyle = {
+        backgroundImage: `url(${this.props.formData.uploadedFileCloudinaryUrl})`,
+        backgroundPosition: "center center",
+        backgroundOrigin: "border-box",
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
+        height: "100%",
+      }
       dropzoneInnerHTML = (
-        <div>
+        <div style={{ width: "100%", height: "100%"}}>
           <div style={{ position: "absolute", top: 10, left: 10 }}>
-            <p>{this.props.formData.uploadedFile.name}</p>
+            <p>
+            { this.props.formData.uploadedFile ? this.props.formData.uploadedFile.name : ""}
+            </p>
           </div>
-          <div>
-            <img
-              src={this.props.formData.uploadedFileCloudinaryUrl}
-              width={300}
-              alt="uploaded_image"
-            />
+          <div style={boxStyle}>
           </div>
         </div>
       );
@@ -109,6 +127,7 @@ class ArtForm extends React.Component {
             <div className="col-sm">
               <Dropzone
                 multiple={false}
+                className="dropzone"
                 accept="image/*"
                 style={dropzoneStyle}
                 activeStyle={activeStyle}
@@ -126,10 +145,9 @@ class ArtForm extends React.Component {
                   value={this.props.formData.title}
                   onChange={this.handleChange}
                   />
-                  </div>
-              <div className="form-group">
-                  <select className="custom-select">
-                    <option defaultValue="">Category</option>
+                  <select defaultValue={this.props.formData.category} className="custom-select"
+                    onChange={this.handleCategoryChange}>
+                    <option value="none">Category</option>
                     <option value="portrait">Portrait</option>
                     <option value="still life">Still Life</option>
                     <option value="abstract">Abstract</option>
@@ -137,9 +155,11 @@ class ArtForm extends React.Component {
                   </select>
               </div>
               <DatePicker dateVal={this.props.formData.dateCreated} handleChange={this.handleDateChange}/>
+              { !this.props.hideSubmit && 
               <Button bsStyle="primary" type="submit">
                 Submit
               </Button>
+            }
             </div>
           </div>
         </div>
@@ -148,21 +168,4 @@ class ArtForm extends React.Component {
   }
 }
 
-
-const mapStateToProps = state => {
-  return {
-    formData: state.form
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    updateForm: (data) => dispatch(updateForm(data)),
-    submitForm: (data) => dispatch(submitForm(data)),
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ArtForm);
+export default ArtForm

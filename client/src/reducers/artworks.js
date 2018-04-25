@@ -1,4 +1,3 @@
-
 export default function artworks(
     state = {
         isFetching: false,
@@ -26,7 +25,7 @@ export default function artworks(
                 artworks: artworksReducer(action, action.artworks)
             };
         }
-        case "ADD_ARTWORK_RECIEVED": {
+        case "UPDATE_PENDING_ARTWORK": {
             return {
                 ...state,
                 artworks: artworksReducer(action, state.artworks)
@@ -52,20 +51,15 @@ export default function artworks(
                 artworks: artworksReducer(action, state.artworks)
             };
         }
-        case "ADD_PENDING_ARTWORK": {
-            action.data = {
-                title: action.title,
-                imgUrl: action.imgUrl,
-                refId: action.refId
-            };
 
+        case "ADD_ARTWORK": {
             return {
                 ...state,
                 artworks: artworksReducer(action, state.artworks)
             };
         }
         default: {
-          return state;
+            return state;
         }
     }
 }
@@ -79,40 +73,29 @@ function artworksReducer(action, artworks) {
                 return artwork;
             });
         }
-        case "ADD_ARTWORK_RECIEVED": {
+        case "UPDATE_PENDING_ARTWORK": {
             return artworks.map(artwork => {
                 if (artwork.refId === action.data.refId) {
                     return {
                         ...artwork,
-                        id: action.data.id,
-                        dateCreated: action.data.dateCreated,
-                        isUpdating: false
+                        ...action.data
                     };
                 }
                 return artwork;
             });
         }
-
-        // create a new pending artwork
-        case "ADD_PENDING_ARTWORK": {
-          console.log("ACTION DATA = ");
-          console.log(action);
-            return [
-                ...artworks,
-                {
-                    id: null,
-                    title: action.data.title,
-                    dateCreated: action.data.dateCreated,
-                    imgUrl: action.data.imgUrl,
-                    refId: action.data.refId,
-                    isUpdating: true
-                }
-            ];
+        
+        case "ADD_ARTWORK": {
+            return [...artworks, action.data];
         }
 
         // remove pending
         case "REMOVE_PENDING_ARTWORK": {
-            return artworks.filter(artwork => artwork.isUpdating === false);
+            return artworks.filter(
+                artwork =>
+                    artwork.isUpdating === false &&
+                    artwork.refId === action.data.refId
+            );
         }
         case "REMOVE_ARTWORK": {
             return artworks.filter(artwork => {
@@ -121,7 +104,7 @@ function artworksReducer(action, artworks) {
         }
         case "UPDATE_ARTWORK": {
             return artworks.map(artwork => {
-                return artwork.id === action.id
+                return artwork.id === action.data.id
                     ? Object.assign({}, artwork, action.data)
                     : artwork;
             });

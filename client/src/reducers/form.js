@@ -1,21 +1,24 @@
 
-function initialDate() {
+function initialState() {
     const currentDate = new Date();
+
     return {
-        month: currentDate.getMonth() + 1,
-        day: currentDate.getDate(),
-        year: currentDate.getFullYear()
-    };
+        title: "",
+        id: null,
+        category: "none",
+        uploadedFileCloudinaryUrl: "",
+        isUploadingImage: false,
+        dateCreated: {
+            month: currentDate.getMonth() + 1,
+            day: currentDate.getDate(),
+            year: currentDate.getFullYear()
+        },
+        uploadedFile: null
+    }
 }
 
 export default function reducer(
-    state = {
-        title: "",
-        uploadedFileCloudinaryUrl: "",
-        isUploadingImage: false,
-        dateCreated: initialDate(),
-        uploadedFile: null
-    },
+    state = initialState(),
     action
 ) {
     switch (action.type) {
@@ -42,13 +45,7 @@ export default function reducer(
             }
         }
         case "CLEAR_FORM": {
-            return {
-                title: "",
-                uploadedFileCloudinaryUrl: "",
-                isUploadingImage: false,
-                dateCreated: initialDate(),
-                uploadedFile: null
-            };
+            return initialState()
         }
         default: {
             return state;

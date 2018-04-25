@@ -34,3 +34,7 @@
   clear: both;
   display: block;
 }
+
+.modal-backdrop {
+  opacity: .5;
+}

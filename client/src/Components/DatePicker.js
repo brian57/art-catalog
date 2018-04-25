@@ -11,7 +11,7 @@ class DatePicker extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
   }
-  
+
   render() {
     const selectCss = {
       width: "inherit",
@@ -22,14 +22,14 @@ class DatePicker extends React.Component {
 
     return (
       <div className="form-group" style={{ textAlign: "left" }}>
-        <label>Date Created:</label>
+        <label>Date Created: (M/D/Y) </label>
         <div>
           <select
             name="month"
             className="custom-select"
             style={selectCss}
             onChange={this.handleChange}
-            defaultValue={this.props.dateVal.month}
+            defaultValue={parseInt(this.props.dateVal.month, 10)}
           >
             {this.createOptions(_.range(1, 13))}
           </select>
@@ -38,7 +38,7 @@ class DatePicker extends React.Component {
             className="custom-select"
             style={selectCss}
             onChange={this.handleChange}
-            defaultValue={this.props.dateVal.day}
+            defaultValue={parseInt(this.props.dateVal.day, 10)}
           >
             {this.createOptions(_.range(1, 32))}
           </select>

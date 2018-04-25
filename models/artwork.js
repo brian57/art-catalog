@@ -2,16 +2,32 @@
 var db = require("../db.js");
 
 exports.create = function(data, done) {
-  var values = [data.title, data.imgUrl, formatDateForMySQL(new Date())];
+  var values = [data.title, data.imgUrl, data.dateCreated, data.category];
 
   db.get()
     .query(
-      "INSERT INTO work (title, img_url, date_created) VALUES(?, ?, ?)",
+      "INSERT INTO work (title, img_url, date_created, category) VALUES(?, ?, ?, ?)",
       values,
       function(err, result) {
         if (err) return done(err);
         data["dateCreated"] = values[2];
         data["id"] = result.insertId;
+
+        done(null, data);
+      }
+    );
+};
+
+exports.update = function(data, done) {
+  var values = [data.title, data.imgUrl, data.dateCreated, data.category, data.id];
+
+  db.get()
+    .query(
+      "UPDATE work SET title = ?, img_url = ?, date_created = ?, category = ?" + 
+      " WHERE id = ?",
+      values,
+      function(err, result) {
+        if (err) return done(err);
 
         done(null, data);
       }

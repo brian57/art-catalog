@@ -1,9 +1,16 @@
 import React from "react";
 import Button from "react-bootstrap/lib/Button";
+import Spinner from "./Spinner";
 
 class ArtCard extends React.Component {
-  onDelete() {
+  onDelete(event) {
+    event.preventDefault();
+    event.stopPropagation();
     this.props.onDelete(this.props.id);
+  }
+
+  handleClick () {
+    this.props.handleClick(this.props.id);
   }
 
   render() {
@@ -23,8 +30,22 @@ class ArtCard extends React.Component {
       backgroundRepeat: "no-repeat",
     }
 
+    const overlayStyle = {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: 99,
+      backgroundColor: "rgba(0,0,0,0.5)",
+    }
+
     return (
-      <div className="artwork-card" style={containerStyle}>
+      <div className="artwork-card" style={containerStyle} onClick={this.handleClick.bind(this)} >
+        { this.props.isUpdating ? <div style={overlayStyle}> 
+          <Spinner />          
+        </div>
+        : "" }
         <div className="inner-card" style={boxStyle} >
           <div className="overlay">
             <div className="title-container">
