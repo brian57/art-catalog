@@ -37,7 +37,9 @@ class ArtForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.submitForm(this.props.formData);
+    if (this.props.submitForm) {
+      this.props.submitForm(this.props.formData);
+    }
   }
 
   onImageDrop(files) {

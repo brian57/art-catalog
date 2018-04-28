@@ -3,6 +3,7 @@ import ArtForm from "./ArtForm";
 import ArtCard from "./ArtCard";
 import Slider from "./Slider";
 import Modal from "./Modal";
+import Button from "react-bootstrap/lib/Button";
 import _ from "lodash";
 
 import { connect } from "react-redux";
@@ -67,25 +68,33 @@ class Layout extends React.Component {
     this.props.hideModal();
   }
 
-  handleModalSubmit() {
+  handleUpdateSubmit() {
     this.props.updateArtwork(this.props.formData);
     this.props.hideModal();
+  }
+
+  handleCreateSubmit() {
+    this.props.createArtwork(this.props.formData);
+    this.props.hideModal();
+  }
+
+  openModalCreate() {
+    this.props.displayModal();
   }
 
   render() {
     return (
       <div className="layout">
         <h1>Artworks</h1>
-
-        <ArtForm
-          updateForm={this.props.updateForm}
-          submitForm={this.props.createArtwork}
-          formData={this.props.formData}
-        />
-        <Slider
-          editCardWidth={this.props.editCardWidth}
-          widthVal={this.props.cardWidth}
-        />
+        <div class="control-container">
+          <Slider
+            editCardWidth={this.props.editCardWidth}
+            widthVal={this.props.cardWidth}
+          />
+          <Button bsStyle="primary" onClick={this.openModalCreate.bind(this)} >
+            Create
+          </Button>
+        </div>
         <div className="artwork-container">
           {this.props.artwork.map(artwork => (
             <ArtCard
@@ -105,9 +114,13 @@ class Layout extends React.Component {
         <Modal
           show={this.props.showModal}
           handleClose={this.handleModalClose.bind(this)}
-          handleModalSubmit={this.handleModalSubmit.bind(this)}
+          handleModalSubmit={
+          this.props.formData.id 
+          ? this.handleUpdateSubmit.bind(this)
+          :  this.handleCreateSubmit.bind(this)
+          }
         >
-          <h3>Edit Artwork</h3> 
+          <h3> { this.props.formData.id ? "Edit" : "Create" } Artwork</h3> 
           <ArtForm
             updateForm={this.props.updateForm}
             hideSubmit={true}

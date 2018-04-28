@@ -43,7 +43,7 @@ class ArtCard extends React.Component {
     return (
       <div className="artwork-card" style={containerStyle} onClick={this.handleClick.bind(this)} >
         { this.props.isUpdating ? <div style={overlayStyle}> 
-          <Spinner />          
+          
         </div>
         : "" }
         <div className="inner-card" style={boxStyle} >
