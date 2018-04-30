@@ -16,7 +16,7 @@ body {
 }
 
 .dropzone {
-    float: right;
+    margin: 0 auto;
 }
 
 .react-date-picker__button__input__input {

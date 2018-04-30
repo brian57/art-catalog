@@ -86,14 +86,21 @@ class Layout extends React.Component {
     return (
       <div className="layout">
         <h1>Artworks</h1>
-        <div class="control-container">
-          <Slider
-            editCardWidth={this.props.editCardWidth}
-            widthVal={this.props.cardWidth}
-          />
-          <Button bsStyle="primary" onClick={this.openModalCreate.bind(this)} >
-            Create
-          </Button>
+        <div className="container control-container">
+          <form class="form-inline">
+            <div class="form-group mr-2">
+              <Button bsStyle="primary" onClick={this.openModalCreate.bind(this)} >
+                Create
+              </Button>
+            </div>
+            <div class="form-group">
+              <label for="staticEmail" class="mr-2">Change Size</label>
+              <Slider
+                editCardWidth={this.props.editCardWidth}
+                widthVal={this.props.cardWidth}
+              />
+            </div>
+          </form>
         </div>
         <div className="artwork-container">
           {this.props.artwork.map(artwork => (

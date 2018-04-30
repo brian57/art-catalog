@@ -138,7 +138,7 @@ class ArtForm extends React.Component {
                 {dropzoneInnerHTML}
               </Dropzone>
             </div>
-            <div className="col-sm">
+            <div className="col-md">
               <div className="form-group">
                 <input 
                   type="text" 

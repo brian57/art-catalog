@@ -26,10 +26,14 @@ class Modal extends React.Component {
       top: "10%",
       left: "10%",
       right: "10%",
+      maxWidth: "700px",
       bottom: "10%",
+      marginLeft: "auto",
+      marginRight: "auto",
       backgroundColor: "white",
       position: "fixed",
       borderRadius: "10px",
+      overflow: "hidden",
       zIndex: 1000
     };
 
@@ -42,8 +46,14 @@ class Modal extends React.Component {
     };
 
     const bodyStyle = {
-      border: "1px solid #ddd",
       margin: "10px",
+      position: "absolute",
+      overflowY: "scroll",
+      boxSizing: "content-box",
+      paddingRight: "17px",
+      top: 0,
+      bottom: 75,
+      width: "100%"
     }
 
     return (
