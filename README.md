@@ -1,12 +1,10 @@
 # art-catalog
-My first stab at making a React.js, Redux, Express app: A simple web app to catalog
-and sort my paintings.
+A simple app to catalog and sort my paintings and to improve my skills with 
+React.js, Redux, and Express.
 
-# Things left to do:
+# TODO
 - form validation
 - pagination
-- clean up CSS
 - Add Tags
-- clean up actions + reducers
-- Test Errors
-- Test loading states
+- errors
+- Sorting

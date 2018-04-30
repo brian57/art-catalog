@@ -9,50 +9,48 @@ class ArtCard extends React.Component {
     this.props.onDelete(this.props.id);
   }
 
-  handleClick () {
+  handleClick() {
     this.props.handleClick(this.props.id);
   }
 
   render() {
-
     const containerStyle = {
       width: this.props.cardWidth + "px",
       height: this.props.cardWidth + "px",
       cursor: "pointer",
-      position: "relative",
-    }
+      position: "relative"
+    };
 
     const boxStyle = {
       backgroundImage: `url(${this.props.imgUrl})`,
       backgroundPosition: "center center",
       backgroundOrigin: "border-box",
       backgroundSize: "contain",
-      backgroundRepeat: "no-repeat",
-    }
-
-    const overlayStyle = {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: 99,
-      backgroundColor: "rgba(0,0,0,0.5)",
-    }
+      backgroundRepeat: "no-repeat"
+    };
 
     return (
-      <div className="artwork-card" style={containerStyle} onClick={this.handleClick.bind(this)} >
-        { this.props.isUpdating ? <div style={overlayStyle}> 
-          <Spinner />
-        </div>
-        : "" }
-        <div className="inner-card" style={boxStyle} >
+      <div
+        className="artwork-card"
+        style={containerStyle}
+        onClick={this.handleClick.bind(this)}
+      >
+        {this.props.isUpdating ? (
+          <div className="loading-overlay">
+            <Spinner />
+          </div>
+        ) : (
+          ""
+        )}
+        <div className="inner-card" style={boxStyle}>
           <div className="overlay">
-            <div className="title-container">
-              {this.props.title}
-            </div>
+            <div className="title-container">{this.props.title}</div>
             <div className="button-container">
-              <Button bsStyle="danger" className="deleteButton" onClick={this.onDelete.bind(this)}>
+              <Button
+                bsStyle="danger"
+                className="deleteButton"
+                onClick={this.onDelete.bind(this)}
+              >
                 Delete
               </Button>
             </div>

@@ -8,13 +8,19 @@ class Slider extends React.Component {
 
   render() {
     return (
-      <div className={"slider"} >
-        <input type="range" value={this.props.cardWidth} min="30" max="300" onChange={this.handleChange} />
+      <div className={"slider"}>
+        <input
+          type="range"
+          value={this.props.cardWidth}
+          min="150"
+          max="300"
+          onChange={this.handleChange}
+        />
       </div>
     );
   }
 
-  handleChange (event) {
+  handleChange(event) {
     const width = event.target.value;
     this.props.editCardWidth(width);
   }

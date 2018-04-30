@@ -10,10 +10,15 @@ import { connect } from "react-redux";
 import {
   fetchArtwork,
   removeArtwork,
-  editCardWidth,
+  editCardWidth
 } from "../actions/artworks";
 
-import { createArtwork, updateArtwork, updateForm, clearForm } from "../actions/form";
+import {
+  createArtwork,
+  updateArtwork,
+  updateForm,
+  clearForm
+} from "../actions/form";
 
 class Layout extends React.Component {
   constructor(props, context) {
@@ -41,8 +46,11 @@ class Layout extends React.Component {
   }
 
   handleCardClick(id) {
-    // update form to have Artwork's data 
-    const artworkData = _.find(this.props.artwork, (artwork) => artwork.id === id)
+    // update form to have Artwork's data
+    const artworkData = _.find(
+      this.props.artwork,
+      artwork => artwork.id === id
+    );
 
     let dateCreatedString = artworkData["dateCreated"];
 
@@ -57,7 +65,7 @@ class Layout extends React.Component {
       dateCreated: {
         year: year,
         month: month,
-        day: day,
+        day: day
       }
     });
     this.props.displayModal();
@@ -85,16 +93,21 @@ class Layout extends React.Component {
   render() {
     return (
       <div className="layout">
-        <h1>Artworks</h1>
         <div className="container control-container">
+          <h1 className="title">Artworks</h1>
           <form class="form-inline">
             <div class="form-group mr-2">
-              <Button bsStyle="primary" onClick={this.openModalCreate.bind(this)} >
+              <Button
+                bsStyle="primary"
+                onClick={this.openModalCreate.bind(this)}
+              >
                 Create
               </Button>
             </div>
             <div class="form-group">
-              <label for="staticEmail" class="mr-2">Change Size</label>
+              <label for="staticEmail" class="mr-2">
+                Change Size
+              </label>
               <Slider
                 editCardWidth={this.props.editCardWidth}
                 widthVal={this.props.cardWidth}
@@ -102,7 +115,7 @@ class Layout extends React.Component {
             </div>
           </form>
         </div>
-        <div className="artwork-container">
+        <div className="container artwork-container">
           {this.props.artwork.map(artwork => (
             <ArtCard
               key={artwork.id}
@@ -122,12 +135,12 @@ class Layout extends React.Component {
           show={this.props.showModal}
           handleClose={this.handleModalClose.bind(this)}
           handleModalSubmit={
-          this.props.formData.id 
-          ? this.handleUpdateSubmit.bind(this)
-          :  this.handleCreateSubmit.bind(this)
+            this.props.formData.id
+              ? this.handleUpdateSubmit.bind(this)
+              : this.handleCreateSubmit.bind(this)
           }
         >
-          <h3> { this.props.formData.id ? "Edit" : "Create" } Artwork</h3> 
+          <h3> {this.props.formData.id ? "Edit" : "Create"} Artwork</h3>
           <ArtForm
             updateForm={this.props.updateForm}
             hideSubmit={true}

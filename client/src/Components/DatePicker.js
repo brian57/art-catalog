@@ -59,14 +59,15 @@ class DatePicker extends React.Component {
 
   createOptions(range) {
     return range.map(val => (
-      <option key={val} value={val}> {val} </option>
+      <option key={val} value={val}>
+        {" "}
+        {val}{" "}
+      </option>
     ));
   }
 
   handleChange(event) {
-    console.log("EVENT = ")
-    console.log(event.target.name);
-    this.props.handleChange(event)
+    this.props.handleChange(event);
   }
 }
 

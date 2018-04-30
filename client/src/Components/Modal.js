@@ -3,7 +3,7 @@ import Button from "react-bootstrap/lib/Button";
 import ScrollLock from "react-scrolllock";
 
 /**
- * Had issues with React Bootstrap Modal and React 16 so made a simple cutom 
+ * Had issues with React Bootstrap Modal and React 16 so made a simple cutom
  * one instead
  */
 class Modal extends React.Component {
@@ -54,7 +54,7 @@ class Modal extends React.Component {
       top: 0,
       bottom: 75,
       width: "100%"
-    }
+    };
 
     return (
       <div>
